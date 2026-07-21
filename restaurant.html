@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bello's Kitchen — Nigerian Restaurant</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --bg:      #0f0a06;
+  --surface: #171009;
+  --card:    #1e1408;
+  --gold:    #d4a847;
+  --gold2:   #f0c96e;
+  --red:     #c0392b;
+  --text:    #f5efe6;
+  --muted:   #9a8a75;
+  --border:  rgba(212,168,71,0.15);
+}
+
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:16px; line-height:1.65; overflow-x:hidden;
+}
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--gold); border-radius:4px; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.2rem 7%;
+  background:rgba(15,10,6,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem; font-weight:800;
+  color:var(--gold); letter-spacing:0.02em;
+}
+.logo span { color:var(--text); font-style:italic; }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a {
+  color:var(--muted); text-decoration:none;
+  font-size:0.88rem; font-weight:500; transition:color 0.3s;
+}
+.nav-links a:hover { color:var(--gold); }
+.nav-cta {
+  background:var(--gold); color:#000; padding:0.6rem 1.4rem;
+  border-radius:6px; text-decoration:none; font-weight:700;
+  font-size:0.85rem; transition:all 0.3s;
+}
+.nav-cta:hover { background:var(--gold2); }
+.back-btn {
+  color:var(--muted); text-decoration:none; font-size:0.85rem;
+  display:flex; align-items:center; gap:0.4rem; transition:color 0.3s;
+}
+.back-btn:hover { color:var(--gold); }
+
+/* HERO */
+.hero {
+  min-height:100vh; display:flex; align-items:center;
+  padding:9rem 7% 5rem; position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 60% 60% at 70% 40%, rgba(212,168,71,0.07), transparent),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(192,57,43,0.06), transparent),
+    linear-gradient(to bottom, #0f0a06, #1a1005);
+}
+.hero-pattern {
+  position:absolute; inset:0; z-index:0; opacity:0.03;
+  background-image: repeating-linear-gradient(
+    45deg, var(--gold) 0, var(--gold) 1px,
+    transparent 0, transparent 50%
+  );
+  background-size:20px 20px;
+}
+.hero-content { position:relative; z-index:1; max-width:700px; }
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:rgba(212,168,71,0.1); border:1px solid rgba(212,168,71,0.25);
+  color:var(--gold); padding:0.45rem 1.1rem; border-radius:100px;
+  font-size:0.8rem; font-weight:600; margin-bottom:1.8rem;
+  animation:fadeUp 0.6s ease both;
+}
+.star { animation:spin 4s linear infinite; display:inline-block; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.hero h1 {
+  font-family:'Playfair Display',serif; font-weight:800;
+  font-size:clamp(3rem,7vw,5.5rem);
+  line-height:1.05; letter-spacing:-0.01em;
+  animation:fadeUp 0.7s 0.1s ease both;
+}
+.hero h1 em { font-style:italic; color:var(--gold); }
+.hero-desc {
+  font-size:1.05rem; color:var(--muted); font-weight:300;
+  max-width:460px; margin:1.8rem 0 2.8rem;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+.hero-actions { display:flex; gap:1rem; flex-wrap:wrap; animation:fadeUp 0.7s 0.3s ease both; }
+.btn-gold {
+  background:var(--gold); color:#000; padding:0.9rem 2.2rem;
+  border-radius:8px; text-decoration:none; font-weight:700;
+  font-size:0.95rem; transition:all 0.3s; display:inline-flex; align-items:center; gap:0.5rem;
+}
+.btn-gold:hover { background:var(--gold2); transform:translateY(-3px); box-shadow:0 10px 40px rgba(212,168,71,0.3); }
+.btn-outline {
+  border:1px solid var(--border); color:var(--text); padding:0.9rem 2.2rem;
+  border-radius:8px; text-decoration:none; font-weight:500; font-size:0.95rem; transition:all 0.3s;
+}
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+.hero-badges {
+  display:flex; gap:2rem; margin-top:4rem;
+  padding-top:3rem; border-top:1px solid var(--border);
+  animation:fadeUp 0.7s 0.4s ease both;
+}
+.badge-item { text-align:center; }
+.badge-icon { font-size:1.8rem; margin-bottom:0.4rem; }
+.badge-label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* SECTIONS */
+section { padding:7rem 7%; }
+.s-tag { font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem; }
+.s-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:800; line-height:1.1; margin-bottom:1rem; }
+.s-desc { color:var(--muted); max-width:500px; margin-bottom:3.5rem; line-height:1.75; }
+
+/* ABOUT */
+#about { background:var(--surface); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.about-img {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; aspect-ratio:4/5;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:1rem; position:relative; overflow:hidden;
+}
+.about-img::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--red));
+}
+.about-img-emoji { font-size:6rem; }
+.about-img-label { color:var(--muted); font-size:0.85rem; font-style:italic; }
+.about-text p { color:var(--muted); margin-bottom:1.2rem; line-height:1.85; }
+.about-features { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:2rem; }
+.feature-box {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:1.2rem; text-align:center;
+}
+.feature-box .f-icon { font-size:1.6rem; margin-bottom:0.5rem; }
+.feature-box .f-label { font-size:0.8rem; color:var(--muted); }
+.feature-box .f-val { font-weight:700; font-size:0.95rem; color:var(--gold); }
+
+/* MENU */
+.menu-tabs { display:flex; gap:0.8rem; margin-bottom:2.5rem; flex-wrap:wrap; }
+.tab-btn {
+  background:var(--card); border:1px solid var(--border);
+  color:var(--muted); padding:0.6rem 1.4rem; border-radius:100px;
+  font-size:0.85rem; font-weight:500; cursor:pointer; transition:all 0.3s;
+}
+.tab-btn.active { background:var(--gold); color:#000; border-color:var(--gold); font-weight:700; }
+.tab-btn:hover:not(.active) { border-color:var(--gold); color:var(--gold); }
+
+.menu-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+.menu-item {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:1.6rem; transition:all 0.3s;
+  display:none;
+}
+.menu-item.active { display:block; }
+.menu-item:hover { border-color:rgba(212,168,71,0.3); transform:translateY(-4px); }
+.menu-emoji { font-size:3rem; margin-bottom:1rem; }
+.menu-name { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; margin-bottom:0.4rem; }
+.menu-desc { color:var(--muted); font-size:0.85rem; line-height:1.6; margin-bottom:1rem; }
+.menu-footer { display:flex; justify-content:space-between; align-items:center; }
+.menu-price { color:var(--gold); font-weight:700; font-size:1.1rem; font-family:'Playfair Display',serif; }
+.menu-tag {
+  background:rgba(212,168,71,0.1); color:var(--gold);
+  padding:0.2rem 0.7rem; border-radius:100px; font-size:0.72rem;
+  border:1px solid rgba(212,168,71,0.2);
+}
+
+/* GALLERY */
+#gallery { background:var(--surface); }
+.gallery-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto auto;
+  gap:1rem;
+}
+.gallery-item {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:14px; overflow:hidden; transition:all 0.3s;
+  display:flex; align-items:center; justify-content:center;
+  font-size:4rem; padding:2.5rem 1rem;
+  flex-direction:column; gap:0.8rem;
+}
+.gallery-item:hover { transform:scale(1.03); border-color:rgba(212,168,71,0.3); }
+.gallery-item.big { grid-column:span 2; font-size:5rem; padding:3.5rem; }
+.gallery-caption { font-size:0.8rem; color:var(--muted); text-align:center; }
+
+/* RESERVATION */
+.reservation-wrap { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.res-info p { color:var(--muted); line-height:1.85; margin-bottom:2rem; }
+.res-details { display:flex; flex-direction:column; gap:1rem; }
+.res-detail {
+  display:flex; align-items:center; gap:1rem;
+  background:var(--card); border:1px solid var(--border);
+  padding:1rem 1.2rem; border-radius:12px;
+}
+.res-icon { font-size:1.3rem; }
+.res-label { font-size:0.75rem; color:var(--muted); }
+.res-val { font-weight:600; font-size:0.9rem; }
+
+.res-form { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:2.5rem; position:relative; overflow:hidden; }
+.res-form::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--red));
+}
+.form-group { margin-bottom:1.2rem; }
+.form-group label { display:block; font-size:0.82rem; color:var(--muted); margin-bottom:0.5rem; font-weight:500; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  color:var(--text); padding:0.85rem 1rem; border-radius:8px;
+  font-size:0.9rem; font-family:'DM Sans',sans-serif;
+  transition:border-color 0.3s; outline:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color:var(--gold); }
+.form-group textarea { resize:vertical; min-height:90px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-submit {
+  width:100%; background:var(--gold); color:#000; padding:1rem;
+  border:none; border-radius:8px; font-weight:700; font-size:0.95rem;
+  cursor:pointer; transition:all 0.3s; margin-top:0.5rem;
+}
+.form-submit:hover { background:var(--gold2); transform:translateY(-2px); }
+
+/* SUCCESS MSG */
+.success-msg {
+  display:none; text-align:center; padding:2rem;
+  color:var(--gold); font-family:'Playfair Display',serif; font-size:1.2rem;
+}
+
+/* FOOTER */
+footer {
+  background:var(--surface); border-top:1px solid var(--border);
+  padding:3rem 7%; display:grid;
+  grid-template-columns:1.5fr 1fr 1fr; gap:3rem;
+}
+.footer-brand .logo { font-size:1.4rem; margin-bottom:1rem; display:block; }
+.footer-brand p { color:var(--muted); font-size:0.85rem; line-height:1.75; }
+.footer-col h4 { color:var(--gold); font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem; }
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+.footer-col ul li { color:var(--muted); font-size:0.85rem; }
+.footer-bottom {
+  background:var(--surface); border-top:1px solid var(--border);
+  padding:1.2rem 7%; text-align:center;
+  color:var(--muted); font-size:0.8rem;
+}
+.footer-bottom span { color:var(--gold); }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:900px) {
+  .about-grid, .reservation-wrap { grid-template-columns:1fr; gap:3rem; }
+  footer { grid-template-columns:1fr; gap:2rem; }
+  .gallery-grid { grid-template-columns:1fr 1fr; }
+  .gallery-item.big { grid-column:span 2; }
+}
+@media(max-width:640px) {
+  nav .nav-links { display:none; }
+  section { padding:5rem 5%; }
+  .form-row { grid-template-columns:1fr; }
+  .gallery-grid { grid-template-columns:1fr; }
+  .gallery-item.big { grid-column:span 1; }
+  .hero-badges { gap:1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Bello's<span> Kitchen</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reservation">Reserve</a></li>
+  </ul>
+  <a href="index.html" class="back-btn">← Back to Portfolio</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="star">✦</span>
+      Authentic Nigerian Cuisine
+    </div>
+    <h1>
+      Taste the<br/>
+      <em>Soul</em> of<br/>
+      Nigeria.
+    </h1>
+    <p class="hero-desc">
+      Welcome to Bello's Kitchen — where every dish tells a story.
+      Rich flavours, warm ambience, and the finest Nigerian hospitality.
+    </p>
+    <div class="hero-actions">
+      <a href="#reservation" class="btn-gold">Reserve a Table →</a>
+      <a href="#menu" class="btn-outline">View Our Menu</a>
+    </div>
+    <div class="hero-badges">
+      <div class="badge-item">
+        <div class="badge-icon">🍲</div>
+        <div class="badge-label">Authentic Recipes</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">👨‍🍳</div>
+        <div class="badge-label">Expert Chefs</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">🌿</div>
+        <div class="badge-label">Fresh Ingredients</div>
+      </div>
+      <div class="badge-item">
+        <div class="badge-icon">⭐</div>
+        <div class="badge-label">5 Star Service</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img reveal">
+      <div class="about-img-emoji">🍽️</div>
+      <div class="about-img-label">"Food is love made visible"</div>
+    </div>
+    <div class="reveal">
+      <div class="s-tag">Our Story</div>
+      <h2 class="s-title">A Kitchen Built on Passion & Tradition</h2>
+      <p class="s-desc" style="margin-bottom:1rem;">Bello's Kitchen was founded with one simple mission — to bring the bold, rich, and authentic flavours of Nigerian cuisine to every table.</p>
+      <p style="color:var(--muted); line-height:1.85; margin-bottom:1.2rem;">From our signature Jollof Rice to our mouthwatering Pepper Soup, every dish is prepared fresh daily using traditional recipes passed down through generations.</p>
+      <p style="color:var(--muted); line-height:1.85;">We believe food is more than nourishment — it is culture, memory, and community. Come experience it.</p>
+      <div class="about-features">
+        <div class="feature-box">
+          <div class="f-icon">📅</div>
+          <div class="f-val">Est. 2018</div>
+          <div class="f-label">Years Serving</div>
+        </div>
+        <div class="feature-box">
+          <div class="f-icon">🍴</div>
+          <div class="f-val">50+ Dishes</div>
+          <div class="f-label">On Our Menu</div>
+        </div>
+        <div class="feature-box">
+          <div class="f-icon">😊</div>
+          <div class="f-val">10,000+</div>
+          <div class="f-label">Happy Guests</div>
+        </div>
+        <div class="feature-box">
+          <div class="f-icon">👨‍🍳</div>
+          <div class="f-val">8 Chefs</div>
+          <div class="f-label">Expert Team</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="s-tag reveal">What We Serve</div>
+  <h2 class="s-title reveal">Our Menu</h2>
+  <p class="s-desc reveal">Fresh, authentic, and full of flavour. Click a category to explore.</p>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" onclick="filterMenu('starters')">🥗 Starters</button>
+    <button class="tab-btn" onclick="filterMenu('mains')">🍲 Main Dishes</button>
+    <button class="tab-btn" onclick="filterMenu('grills')">🔥 Grills</button>
+    <button class="tab-btn" onclick="filterMenu('drinks')">🥤 Drinks</button>
+  </div>
+
+  <div class="menu-grid">
+    <!-- STARTERS -->
+    <div class="menu-item active" data-cat="starters">
+      <div class="menu-emoji">🥜</div>
+      <div class="menu-name">Peppered Snail</div>
+      <p class="menu-desc">Succulent snails cooked in rich tomato pepper sauce with fresh herbs and spices.</p>
+      <div class="menu-footer"><span class="menu-price">₦3,500</span><span class="menu-tag">Spicy</span></div>
+    </div>
+    <div class="menu-item active" data-cat="starters">
+      <div class="menu-emoji">🍢</div>
+      <div class="menu-name">Suya Skewers</div>
+      <p class="menu-desc">Thinly sliced beef marinated in yaji spice blend, grilled to perfection on open fire.</p>
+      <div class="menu-footer"><span class="menu-price">₦2,800</span><span class="menu-tag">Smoky</span></div>
+    </div>
+    <div class="menu-item active" data-cat="starters">
+      <div class="menu-emoji">🧅</div>
+      <div class="menu-name">Peppered Gizzard</div>
+      <p class="menu-desc">Tender gizzard fried crispy then tossed in a spicy peppered sauce with onions.</p>
+      <div class="menu-footer"><span class="menu-price">₦2,500</span><span class="menu-tag">Popular</span></div>
+    </div>
+
+    <!-- MAINS -->
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-emoji">🍛</div>
+      <div class="menu-name">Party Jollof Rice</div>
+      <p class="menu-desc">The legendary smoky Nigerian Jollof Rice, slow-cooked in rich tomato stew. Served with chicken.</p>
+      <div class="menu-footer"><span class="menu-price">₦4,500</span><span class="menu-tag">Best Seller</span></div>
+    </div>
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-emoji">🍲</div>
+      <div class="menu-name">Egusi Soup & Pounded Yam</div>
+      <p class="menu-desc">Thick, rich egusi soup with assorted meat and stockfish, served with smooth pounded yam.</p>
+      <div class="menu-footer"><span class="menu-price">₦5,200</span><span class="menu-tag">Traditional</span></div>
+    </div>
+    <div class="menu-item" data-cat="mains">
+      <div class="menu-emoji">🍜</div>
+      <div class="menu-name">Catfish Pepper Soup</div>
+      <p class="menu-desc">Hot, aromatic pepper soup with fresh catfish, uziza leaves and authentic spices.</p>
+      <div class="menu-footer"><span class="menu-price">₦4,800</span><span class="menu-tag">Hot 🌶️</span></div>
+    </div>
+
+    <!-- GRILLS -->
+    <div class="menu-item" data-cat="grills">
+      <div class="menu-emoji">🍗</div>
+      <div class="menu-name">Whole Grilled Chicken</div>
+      <p class="menu-desc">Seasoned whole chicken marinated overnight and slow-grilled over charcoal. Served with chips.</p>
+      <div class="menu-footer"><span class="menu-price">₦8,500</span><span class="menu-tag">Grill</span></div>
+    </div>
+    <div class="menu-item" data-cat="grills">
+      <div class="menu-emoji">🐟</div>
+      <div class="menu-name">Grilled Tilapia</div>
+      <p class="menu-desc">Fresh whole tilapia marinated in pepper sauce and grilled to a perfect crisp. Served with plantain.</p>
+      <div class="menu-footer"><span class="menu-price">₦6,000</span><span class="menu-tag">Fresh</span></div>
+    </div>
+    <div class="menu-item" data-cat="grills">
+      <div class="menu-emoji">🥩</div>
+      <div class="menu-name">Asun (Peppered Goat)</div>
+      <p class="menu-desc">Smoky grilled goat meat chopped and tossed in fiery pepper sauce with onions and peppers.</p>
+      <div class="menu-footer"><span class="menu-price">₦5,500</span><span class="menu-tag">Spicy 🌶️</span></div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-item" data-cat="drinks">
+      <div class="menu-emoji">🌺</div>
+      <div class="menu-name">Zobo Drink</div>
+      <p class="menu-desc">Chilled hibiscus flower drink infused with ginger, cloves, and pineapple. Naturally refreshing.</p>
+      <div class="menu-footer"><span class="menu-price">₦800</span><span class="menu-tag">Homemade</span></div>
+    </div>
+    <div class="menu-item" data-cat="drinks">
+      <div class="menu-emoji">🥛</div>
+      <div class="menu-name">Kunu Drink</div>
+      <p class="menu-desc">Traditional northern Nigerian millet drink, lightly spiced and perfectly chilled.</p>
+      <div class="menu-footer"><span class="menu-price">₦700</span><span class="menu-tag">Traditional</span></div>
+    </div>
+    <div class="menu-item" data-cat="drinks">
+      <div class="menu-emoji">🍍</div>
+      <div class="menu-name">Fresh Juice Blend</div>
+      <p class="menu-desc">A refreshing blend of pineapple, watermelon, and ginger. Made fresh to order.</p>
+      <div class="menu-footer"><span class="menu-price">₦1,200</span><span class="menu-tag">Fresh</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="s-tag reveal">Atmosphere</div>
+  <h2 class="s-title reveal">Our Gallery</h2>
+  <p class="s-desc reveal">A glimpse into the Bello's Kitchen experience.</p>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item big">
+      🍲
+      <div class="gallery-caption">Our Signature Dishes</div>
+    </div>
+    <div class="gallery-item">
+      🔥
+      <div class="gallery-caption">Live Grill Station</div>
+    </div>
+    <div class="gallery-item">
+      🌿
+      <div class="gallery-caption">Fresh Ingredients Daily</div>
+    </div>
+    <div class="gallery-item">
+      👨‍🍳
+      <div class="gallery-caption">Our Expert Chefs</div>
+    </div>
+    <div class="gallery-item big">
+      🪑
+      <div class="gallery-caption">Cozy Dining Area</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <div class="reservation-wrap">
+    <div class="res-info reveal">
+      <div class="s-tag">Book a Table</div>
+      <h2 class="s-title">Reserve Your Spot</h2>
+      <p>Join us for an unforgettable dining experience. Fill the form to make your reservation and we'll confirm within the hour.</p>
+      <div class="res-details">
+        <div class="res-detail">
+          <span class="res-icon">📍</span>
+          <div>
+            <div class="res-label">Location</div>
+            <div class="res-val">12 Minna Road, Niger State, Nigeria</div>
+          </div>
+        </div>
+        <div class="res-detail">
+          <span class="res-icon">🕐</span>
+          <div>
+            <div class="res-label">Opening Hours</div>
+            <div class="res-val">Mon–Sun: 10:00am – 10:00pm</div>
+          </div>
+        </div>
+        <div class="res-detail">
+          <span class="res-icon">📞</span>
+          <div>
+            <div class="res-label">Phone</div>
+            <div class="res-val">+234 913 494 0124</div>
+          </div>
+        </div>
+        <div class="res-detail">
+          <span class="res-icon">🚗</span>
+          <div>
+            <div class="res-label">Parking</div>
+            <div class="res-val">Free parking available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-form reveal">
+      <div class="s-tag">Make a Reservation</div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="e.g. Olawale Excel" id="res-name"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+234..."/>
+        </div>
+        <div class="form-group">
+          <label>Number of Guests</label>
+          <select>
+            <option>1 Guest</option>
+            <option>2 Guests</option>
+            <option>3–4 Guests</option>
+            <option>5–6 Guests</option>
+            <option>7+ Guests</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date"/>
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="time"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Special Requests (optional)</label>
+        <textarea placeholder="Any dietary requirements, special occasions, seating preferences..."></textarea>
+      </div>
+      <button class="form-submit" onclick="submitReservation()">Reserve My Table →</button>
+      <div class="success-msg" id="successMsg">
+        🎉 Reservation received! We'll confirm your table shortly.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="logo">Bello's<span style="color:var(--text);font-style:italic;"> Kitchen</span></span>
+    <p>Authentic Nigerian cuisine served with love, tradition, and the finest ingredients. Come hungry, leave happy.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Quick Links</h4>
+    <ul>
+      <li><a href="#about" style="color:var(--muted);text-decoration:none;">About Us</a></li>
+      <li><a href="#menu" style="color:var(--muted);text-decoration:none;">Our Menu</a></li>
+      <li><a href="#gallery" style="color:var(--muted);text-decoration:none;">Gallery</a></li>
+      <li><a href="#reservation" style="color:var(--muted);text-decoration:none;">Reservation</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <ul>
+      <li>📍 12 Minna Road, Niger State</li>
+      <li>📞 +234 913 494 0124</li>
+      <li>🕐 Mon–Sun: 10am–10pm</li>
+      <li>📧 bellos@kitchen.com</li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2026 <span>Bello's Kitchen</span>. Built by <span>Olawale Excel</span>. All rights reserved.
+</div>
+
+<script>
+// MENU FILTER
+function filterMenu(cat) {
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.cat === cat);
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(cat) || btn.getAttribute('onclick').includes(cat));
+  });
+}
+
+// RESERVATION SUBMIT
+function submitReservation() {
+  const name = document.getElementById('res-name').value.trim();
+  if (!name) { alert('Please enter your name to reserve a table.'); return; }
+  document.getElementById('successMsg').style.display = 'block';
+  setTimeout(() => { document.getElementById('successMsg').style.display = 'none'; }, 5000);
+}
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// SMOOTH NAV
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+
+</body>
+</html>
